@@ -1,2 +1,3 @@
-# glossary-documents
-The documents for Glossary
+# Glossary documents
+
+The documents for [Glossary](https://github.com/kurosame/glossary)
