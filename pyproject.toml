@@ -2,7 +2,13 @@
 name = "glossary-documents"
 version = "0.1.0"
 description = "Create store for Glossary documents"
-dependencies = []
+dependencies = [
+    "python-dotenv~=1.0.0",
+    "supabase~=1.0.4",
+    "langchain~=0.0.300",
+    "openai~=0.28.0",
+    "tiktoken~=0.5.1",
+]
 requires-python = ">= 3.11"
 
 [build-system]

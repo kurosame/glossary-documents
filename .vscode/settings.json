@@ -1,0 +1,12 @@
+{
+  "cSpell.words": [
+    "dotenv",
+    "langchain",
+    "openai",
+    "pgvector",
+    "plpgsql",
+    "postgrest",
+    "supabase",
+    "vectorstores"
+  ]
+}
