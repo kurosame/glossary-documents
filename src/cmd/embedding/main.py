@@ -4,28 +4,15 @@ from dotenv import load_dotenv
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.schema import Document
 from langchain.vectorstores import SupabaseVectorStore
-from supabase import create_client
+
+from src.application.documents.usecase import delete_all_documents
+from src.middleware.di import di
 
 load_dotenv(verbose=True)
-
-
-def create_supabase_client():
-    supabase = create_client(
-        os.environ.get("SUPABASE_API_URL"), os.environ.get("SUPABASE_API_KEY")
-    )
-    auth = supabase.auth.sign_in_with_password(
-        {
-            "email": os.environ.get("SUPABASE_GLOSSARY_EMAIL"),
-            "password": os.environ.get("SUPABASE_GLOSSARY_PASSWORD"),
-        }
-    )
-    supabase.postgrest.auth(auth.session.access_token)
-
-    return supabase
+inj = di()
 
 
 if __name__ == "__main__":
-    supabase = create_supabase_client()
     embeddings = OpenAIEmbeddings(
         model=os.environ.get("OPENAI_EMBEDDINGS_MODEL"),
         deployment=os.environ.get("OPENAI_EMBEDDINGS_DEPLOYMENT"),
@@ -73,15 +60,13 @@ if __name__ == "__main__":
                 )
             break
 
-    # Delete all rows of a table
-    supabase.table("documents").delete().neq("content", None).execute()
+    delete_all_documents(inj)
 
-    store = SupabaseVectorStore.from_documents(
-        documents=docs,
-        embedding=embeddings,
-        client=supabase,
-        table_name="documents",
-        query_name="match_documents",
-    )
-
-    supabase.auth.sign_out()
+    # 一旦削除
+    # store = SupabaseVectorStore.from_documents(
+    #     documents=docs,
+    #     embedding=embeddings,
+    #     client=supabase,
+    #     table_name="documents",
+    #     query_name="match_documents",
+    # )

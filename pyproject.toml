@@ -8,6 +8,7 @@ dependencies = [
     "langchain~=0.0.300",
     "openai~=0.28.0",
     "tiktoken~=0.5.1",
+    "injector~=0.21.0",
 ]
 requires-python = ">= 3.11"
 
