@@ -1,5 +1,8 @@
 import os
 
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.schema import Document
+from langchain.vectorstores import SupabaseVectorStore
 from supabase import create_client
 
 from src.domain.model.documents.documents_repository import DocumentsRepository
@@ -20,6 +23,17 @@ class SupabaseDocumentsRepository(DocumentsRepository):
 
     def __del__(self):
         self.supabase.auth.sign_out()
+
+    def from_with_query(
+        self, docs: list[Document], embeddings: OpenAIEmbeddings, query_name: str
+    ) -> SupabaseVectorStore:
+        return SupabaseVectorStore.from_documents(
+            documents=docs,
+            embedding=embeddings,
+            client=self.supabase,
+            table_name="documents",
+            query_name=query_name,
+        )
 
     def delete_all(self) -> None:
         self.supabase.table("documents").delete().neq("content", None).execute()

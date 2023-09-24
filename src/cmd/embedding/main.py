@@ -3,9 +3,11 @@ import os
 from dotenv import load_dotenv
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.schema import Document
-from langchain.vectorstores import SupabaseVectorStore
 
-from src.application.documents.usecase import delete_all_documents
+from src.application.documents.usecase import (
+    delete_all_documents,
+    from_documents_with_query,
+)
 from src.middleware.di import di
 
 load_dotenv(verbose=True)
@@ -61,12 +63,8 @@ if __name__ == "__main__":
             break
 
     delete_all_documents(inj)
+    store = from_documents_with_query(
+        inj=inj, docs=docs, embeddings=embeddings, query_name="match_documents"
+    )
 
-    # 一旦削除
-    # store = SupabaseVectorStore.from_documents(
-    #     documents=docs,
-    #     embedding=embeddings,
-    #     client=supabase,
-    #     table_name="documents",
-    #     query_name="match_documents",
-    # )
+    print(store)
