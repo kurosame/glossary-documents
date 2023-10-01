@@ -21,15 +21,21 @@ class SupabaseDocumentsRepository(DocumentsRepository):
         )
         self.supabase.postgrest.auth(auth.session.access_token)
 
+        self.embeddings = OpenAIEmbeddings(
+            model=os.environ.get("OPENAI_EMBEDDINGS_MODEL"),
+            deployment=os.environ.get("OPENAI_EMBEDDINGS_DEPLOYMENT"),
+            chunk_size=1,
+        )
+
     def __del__(self):
         self.supabase.auth.sign_out()
 
     def from_with_query(
-        self, docs: list[Document], embeddings: OpenAIEmbeddings, query_name: str
+        self, docs: list[Document], query_name: str
     ) -> SupabaseVectorStore:
         return SupabaseVectorStore.from_documents(
             documents=docs,
-            embedding=embeddings,
+            embedding=self.embeddings,
             client=self.supabase,
             table_name="documents",
             query_name=query_name,

@@ -1,13 +1,12 @@
 import os
 
 from dotenv import load_dotenv
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.schema import Document
 
 from src.application.documents.usecase import (
     delete_all_documents,
     from_documents_with_query,
 )
+from src.domain.model.documents.document import Document
 from src.middleware.di import di
 
 load_dotenv(verbose=True)
@@ -15,12 +14,6 @@ inj = di()
 
 
 if __name__ == "__main__":
-    embeddings = OpenAIEmbeddings(
-        model=os.environ.get("OPENAI_EMBEDDINGS_MODEL"),
-        deployment=os.environ.get("OPENAI_EMBEDDINGS_DEPLOYMENT"),
-        chunk_size=1,
-    )
-
     docs = []
 
     for root, _, files in os.walk(os.environ["DIR_PATH"]):
@@ -52,7 +45,7 @@ if __name__ == "__main__":
                         is_description = True
 
                 docs.append(
-                    Document(
+                    Document.set(
                         page_content=description,
                         metadata={
                             "category": category,
@@ -63,8 +56,6 @@ if __name__ == "__main__":
             break
 
     delete_all_documents(inj)
-    store = from_documents_with_query(
-        inj=inj, docs=docs, embeddings=embeddings, query_name="match_documents"
-    )
+    store = from_documents_with_query(inj=inj, docs=docs, query_name="match_documents")
 
     print(store)
