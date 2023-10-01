@@ -7,10 +7,8 @@ from src.application.documents.usecase import (
     from_documents_with_query,
 )
 from src.domain.model.documents.document import Document
-from src.middleware.di import di
 
 load_dotenv(verbose=True)
-inj = di()
 
 
 if __name__ == "__main__":
@@ -55,7 +53,7 @@ if __name__ == "__main__":
                 )
             break
 
-    delete_all_documents(inj)
-    store = from_documents_with_query(inj=inj, docs=docs, query_name="match_documents")
+    delete_all_documents()
+    store = from_documents_with_query(docs=docs, query_name="match_documents")
 
     print(store)
