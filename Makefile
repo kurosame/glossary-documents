@@ -12,5 +12,8 @@ plan:
 apply:
 	${RUN_TF} apply
 
+apply-refresh:
+	${RUN_TF} apply -refresh-only
+
 fmt:
 	${RUN_TF} fmt -recursive
