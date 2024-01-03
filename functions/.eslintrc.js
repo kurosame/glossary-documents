@@ -14,6 +14,7 @@ module.exports = {
     "import/resolver": { typescript: {} },
   },
   rules: {
+    "import/extensions": ["error", "ignorePackages", { ts: "never" }],
     "import/order": [
       "error",
       {
