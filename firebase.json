@@ -1,0 +1,14 @@
+{
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "runtime": "nodejs20",
+      "predeploy": [
+        "npm run check --prefix \"$RESOURCE_DIR\"",
+        "npm run build --prefix \"$RESOURCE_DIR\""
+      ],
+      "ignore": [".git", "node_modules"]
+    }
+  ]
+}

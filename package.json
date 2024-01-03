@@ -1,0 +1,12 @@
+{
+  "name": "glossary-documents",
+  "private": true,
+  "scripts": {
+    "fn:build": "npm run build --prefix functions",
+    "fn:emu": "npm run emu --prefix functions",
+    "fn:cli": "npm run cli --prefix functions",
+    "fn:check": "npm run check --prefix functions",
+    "fn:deploy": "npm run deploy --prefix functions",
+    "fn:logs": "npm run logs --prefix functions"
+  }
+}

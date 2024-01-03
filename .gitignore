@@ -1,6 +1,10 @@
 __pycache__/
-.infracost
+.infracost/
 .venv/
+functions/lib/**/*.js
+functions/lib/**/*.js.map
+functions/node_modules/
 terraform/.terraform/
 terraform/.terraformrc
 .env
+.firebaserc

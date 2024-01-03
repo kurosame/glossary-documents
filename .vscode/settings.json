@@ -6,8 +6,10 @@
     "pgvector",
     "plpgsql",
     "postgrest",
+    "predeploy",
     "supabase",
     "usecase",
     "vectorstores"
-  ]
+  ],
+  "eslint.workingDirectories": [{ "mode": "auto" }]
 }
