@@ -1,7 +1,6 @@
-import * as logger from "firebase-functions/logger";
-import { onRequest } from "firebase-functions/v2/https";
+import logger from "firebase-functions/logger";
+import { onObjectFinalized } from "firebase-functions/v2/storage";
 
-export const setDocuments = onRequest((_request, response) => {
-  logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
+export const setDocuments = onObjectFinalized({ timeoutSeconds: 540 }, (e) => {
+  logger.info("Hello logs!", e.data.name);
 });

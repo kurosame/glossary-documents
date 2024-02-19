@@ -1,14 +1,26 @@
 {
   "functions": [
     {
-      "source": "functions",
+      "source": ".",
       "codebase": "default",
       "runtime": "nodejs20",
-      "predeploy": [
-        "npm run check --prefix \"$RESOURCE_DIR\"",
-        "npm run build --prefix \"$RESOURCE_DIR\""
-      ],
+      "predeploy": ["npm run check --prefix \"$RESOURCE_DIR\"", "npm run build --prefix \"$RESOURCE_DIR\""],
       "ignore": [".git", "node_modules"]
     }
-  ]
+  ],
+  "emulators": {
+    "ui": {
+      "enabled": true,
+      "port": 4000,
+      "host": "0.0.0.0"
+    },
+    "functions": {
+      "port": 5001,
+      "host": "0.0.0.0"
+    },
+    "firestore": {
+      "port": 8080,
+      "host": "0.0.0.0"
+    }
+  }
 }
